@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>ShowIP</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+  </style>
+</head>
+<body>
+  <h1>Your IP:</h1>
+  <p id="ip">Loading...</p>
+
+  <script>
+    fetch("/api/ip")
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("ip").textContent = data.ip;
+      })
+      .catch(err => {
+        document.getElementById("ip").textContent = "Error: " + err;
+      });
+  </script>
+</body>
+</html>
