@@ -1,4 +1,4 @@
-name: CI
+name: build-test-deploy
 
 on:
   push:
@@ -20,7 +20,24 @@ jobs:
       - name: install requirements
         run: npm install
         working-directory: ./src
-        
-      - name: test run
-        run: node -e "require('./src/index.js')"
-        
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: install requirements
+        run: npm install
+        working-directory: ./src
+
+      - name: test
+        run: npm test
+        working-directory: ./src
