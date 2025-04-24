@@ -19,6 +19,7 @@ jobs:
 
       - name: install requirements
         run: npm install
+        working-directory: ./src
         
       - name: test run
         run: node -e "require('./src/index.js')"
