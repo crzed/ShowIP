@@ -1,4 +1,12 @@
 {
+  "show": "showip",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  }
+
+}
+{
   "dependencies": {
     "express": "^5.1.0"
   }
