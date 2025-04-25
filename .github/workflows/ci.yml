@@ -76,7 +76,7 @@ jobs:
             ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
       - name: copy docker-compose.yml
         run: |
-            scp -i {{ secrets.SSH_PRIVATE_KEY}} ./docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.WORK_DIR }}
+            scp -i {{ secrets.SSH_PRIVATE_KEY }} ./docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.WORK_DIR }}
       - name: Docker compose
         run: |
             ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -i {{ secrets.SSH_PRIVATE_KEY}} "
