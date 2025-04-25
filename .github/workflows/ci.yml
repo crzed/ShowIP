@@ -79,7 +79,7 @@ jobs:
             ls -alt      
       - name: copy docker-compose.yml to server
         run: |
-            scp -o StrictHostKeyChecking=no ./docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.WORK_DIR }}
+            scp -o StrictHostKeyChecking=no -r . ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.WORK_DIR }}
 
       - name: connect and pull
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && docker compose pull && docker compose up -d && exit"
