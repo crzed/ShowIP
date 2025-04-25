@@ -60,8 +60,7 @@ jobs:
         run: |
           docker build . --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
-
+          
   deploy:
     needs: publish
     runs-on: ubuntu-latest
