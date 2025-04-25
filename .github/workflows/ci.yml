@@ -74,16 +74,14 @@ jobs:
             install -m 600 -D /dev/null ~/.ssh/id_rsa
             echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
             ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
-      - name: debug
+      - name: copy docker-compose.yml
         run: |
-            ls -alt      
-      - name: copy docker-compose.yml to server
+            scp -o StrictHostKeyChecking=no -i {{ secrets.SSH_PRIVATE_KEY}} ./docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.WORK_DIR }}
+      - name: Docker compose
         run: |
-            scp -o StrictHostKeyChecking=no -r . ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.WORK_DIR }}
-
-      - name: connect and pull
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && docker compose pull && docker compose up -d && exit"
-      
-      - name: cleanup
-        run: rm -rf ~/.ssh
+            ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -i {{ secrets.SSH_PRIVATE_KEY}} "
+            cd ${{ secrets.WORK_DIR }} && 
+            docker-compose pull && 
+            docker-compose up -d
+            "
 

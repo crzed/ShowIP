@@ -2,6 +2,9 @@ version: "1.0"
 
 services:
   web:
-    build: .
+    image: ghcr.io/crzed/showip:latest
     ports:
       - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    restart: always
