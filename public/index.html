@@ -4,28 +4,74 @@
   <meta charset="UTF-8" />
   <title>ShowIP</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
     body {
-      font-family: sans-serif;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #6e7f96, #3b4c60);
       display: flex;
-      height: 100vh;
       justify-content: center;
       align-items: center;
+      height: 100vh;
+      color: white;
+      text-align: center;
       flex-direction: column;
     }
+    
+    h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+    #ip {
+      font-size: 2em;
+      font-weight: bold;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    #ip.loading {
+      color: #ffcc00;
+      animation: blink 1s infinite;
+    }
+
+    #ip.error {
+      color: #ff4d4d;
+    }
+    
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+    
   </style>
 </head>
 <body>
   <h1>Your IP:</h1>
-  <p id="ip">Loading...</p>
+  <p id="ip" class="loading">Loading...</p>
 
   <script>
     fetch("/api/ip")
       .then(response => response.json())
       .then(data => {
-        document.getElementById("ip").textContent = data.ip;
+        const ipElement = document.getElementById("ip");
+        ipElement.textContent = data.ip;
+        ipElement.classList.remove("loading");
       })
       .catch(err => {
-        document.getElementById("ip").textContent = "Error: " + err;
+        const ipElement = document.getElementById("ip");
+        ipElement.textContent = "Error: " + err;
+        ipElement.classList.add("error");
+        ipElement.classList.remove("loading");
       });
   </script>
 </body>
