@@ -81,7 +81,7 @@ jobs:
             scp -i ~/.ssh/id_rsa ./docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.WORK_DIR }}
       - name: Login
         run: |
-          echo ${{ secrets.PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
       - name: Docker compose
         run: |
             ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -i ~/.ssh/id_rsa "
