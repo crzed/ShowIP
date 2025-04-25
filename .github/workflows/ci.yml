@@ -83,7 +83,7 @@ jobs:
         run: |
             ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -i ~/.ssh/id_rsa "
             cd ${{ secrets.WORK_DIR }} && 
-            docker-compose pull && 
-            docker-compose up -d
+            docker compose pull && 
+            docker compose up -d --force-recreate
             "
 
