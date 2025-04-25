@@ -76,10 +76,12 @@ jobs:
             ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
       - name: copy docker-compose.yml
         run: |
-            scp -i {{ secrets.SSH_PRIVATE_KEY }} ./docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.WORK_DIR }}
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+            scp -i ~/.ssh/id_rsa ./docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.WORK_DIR }}
       - name: Docker compose
         run: |
-            ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -i {{ secrets.SSH_PRIVATE_KEY}} "
+            ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -i ~/.ssh/id_rsa "
             cd ${{ secrets.WORK_DIR }} && 
             docker-compose pull && 
             docker-compose up -d
