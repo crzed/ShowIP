@@ -49,7 +49,7 @@ jobs:
 
   publish:
     needs: test
-    name: publish image
+    runs-on: ubuntu-latest
 
     steps:
       - name: checkout
