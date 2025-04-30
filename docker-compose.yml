@@ -1,10 +1,25 @@
-version: "1.0"
-
 services:
   web:
     image: ghcr.io/crzed/showip:latest
+    container_name: showip-web
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=production
     restart: always
+    networks:
+      - showip-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - showip-network
+
+networks:
+  showip-network:
