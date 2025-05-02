@@ -4,10 +4,10 @@ RUN apk add --update nodejs npm
 
 COPY . /app
 
-WORKDIR /app
+WORKDIR /app/src
 
-RUN npm install express
+RUN npm install
 
 EXPOSE 3000
 
-ENTRYPOINT ["node", "./src/index.js"]
+ENTRYPOINT ["node", "./index.js"]
