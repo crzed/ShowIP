@@ -8,6 +8,6 @@ WORKDIR /app/src
 
 RUN npm install
 
-EXPOSE 3000
+EXPOSE 80
 
 ENTRYPOINT ["node", "./index.js"]
